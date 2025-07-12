@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# -*- 作者： codervibe -*-
+# -*- 作者： codervibe/ZapcoMan -*-
 # -*- 时间: 18:46 -*-
 # -*- 获取 IP 地址定位 -*-
 # -*- 版本: 3.0.0 -*-

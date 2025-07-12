@@ -3,7 +3,7 @@
 
 ## 📌 版本信息
 当前版本: 3.0.0
-作者: codervibe
+作者: codervibe/ZapcoMan
 最后更新时间: 脚本执行时可通过 -v 或 --version 查看
 
 ## 🛠️ 安装与使用
