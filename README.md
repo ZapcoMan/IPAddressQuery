@@ -60,6 +60,15 @@ api_key: your_api_key_here
 6. **版本查询**：通过命令行参数 `-v` 或 `--version` 查看当前脚本的版本信息。
 7. **自动更新**：通过命令行参数 `-u` 或 `--update` 使用 Git 自动更新到最新版本。
 
+~~~
+IPAddressQuery/
+├── main/
+│   └── IPAddressQuery.py
+├── config.yaml
+└── ips.txt (可选)
+
+~~~
+
 ## 📊 输出说明
 
 当查询一个IP地址时，脚本将输出以下信息：
