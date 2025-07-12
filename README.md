@@ -1,72 +1,74 @@
-#  IPAddressQuery
-~~~shell
-PS D:\python\Python_project\IPAddressQuery\main> python .\IPAddressQuery.py  -h
+# IPAddressQuery
+- 这是一个用于查询IP地址地理位置信息的Python工具，支持单个IP查询、批量文件查询、随机User-Agent设置、多语言支持以及通过代理进行查询等功能。
 
-usage: IPAddressQuery.py [-h] [-a IPADDR] [-f FILE] [-r] [-v] [-u]
+## 📌 版本信息
+当前版本: 3.0.0
+作者: codervibe
+最后更新时间: 脚本执行时可通过 -v 或 --version 查看
 
-查看IP的归属地
-
-options:
-  -h, --help          show this help message and exit
-  -a IPADDR           输入查询IP
-  -f FILE             从文件中读取IP列表进行查询
-  -r, --random-agent  启用随机User-Agent
-  -v, --version       显示脚本的版本信息
-  -u, --update        更新脚本
-
-
-
-~~~
-### 下载和使用 
-~~~
+## 🛠️ 安装与使用
+### 下载项目
+~~~bash
 git clone https://github.com/codervibe/IPAddressQuery
 cd IPAddressQuery/main
-python3 IPAddressQuery.py
 ~~~
-* 因为 kali linux 是可以 执行 py脚本的所以 可以这样使用
+
+### 安装（可选）
 ~~~bash
-cd IPAddressQuery/main/
 cp ./IPAddressQuery.py /usr/bin/IPAddressQuery
-# 直接执行即可
-cd ~ 
-IPAddressQuery -a 114.114.114.11
+chmod +x /usr/bin/IPAddressQuery
 ~~~
-* 运行效果
-~~~shell
-IPAddressQuery -a 69.154.123.56
-查询的IP: 69.154.123.56
-归属地为: 美国, 阿肯色州, 费耶特维尔
-时区: America/Chicago
-经度: -94.1523	纬度: 36.0613
-互联网服务提供商: AT&T Services, Inc.
-谷歌地图:  https://www.google.com/maps/place/36.0613+-94.1523
 
-~~~
-* 支持 proxychains4 代理 查询
-~~~shell
-proxychains4 IPAddressQuery -h              
-[proxychains] config file found: /etc/proxychains4.conf
-[proxychains] preloading /usr/lib/aarch64-linux-gnu/libproxychains.so.4
-[proxychains] DLL init: proxychains-ng 4.17
-usage: IPAddressQuery [-h] [-a IPADDR] [-v]
+## 🔧 依赖库
+- requests
+- yaml
+- json
+- argparse
+- logging
+- random
 
-查看IP的归属地
+## 📝 配置
+编辑 `config.yaml` 文件以配置API密钥：
+```yaml
+api_key: your_api_key_here
+```
 
-options:
-  -h, --help      show this help message and exit
-  -a IPADDR       输入查询IP
-  -f FILE         从文件中读取IP列表进行查询
-  --random-agent  启用随机User-Agent
-  -v, --version   显示脚本的版本信息
+## 🧪 功能特性
+1. **单个IP查询**：通过命令行参数 `-a` 指定单个IP地址进行查询。
+2. **批量文件查询**：通过命令行参数 `-f` 指定包含IP地址列表的文件进行批量查询。
+3. **随机User-Agent**：通过命令行参数 `-r` 启用随机User-Agent以避免被目标服务器识别为爬虫。
+4. **多语言支持**：通过命令行参数 `--lang` 选择输出语言，支持英语、中文、日语、西班牙语和德语。
+5. **代理查询**：支持通过代理服务器进行查询，具体配置请参考代码中的网络请求部分。
+6. **版本查询**：通过命令行参数 `-v` 或 `--version` 查看当前脚本的版本信息。
+7. **自动更新**：通过命令行参数 `-u` 或 `--update` 使用 Git 自动更新到最新版本。
 
-~~~
-### exe 使用方法
-~~~powershell
-IPAddressQuery -a 69.154.123.56
-查询的IP：69.154.123.56
-归属地为: 美国, 阿肯色州, 费耶特维尔
-时区: America/Chicago
-经度: -94.1523	纬度: 36.0613
-互联网服务提供商: AT&T Services, Inc.
-谷歌地图:  https://www.google.com/maps/place/36.0613+-94.1523
-~~~
+## 📊 输出示例
+当查询一个IP地址时，脚本将输出以下信息：
+- IP地址
+- 国家名称
+- 省份/州
+- 城市
+- 经纬度
+- 组织（ISP）
+- 是否欧盟国家
+
+## 📚 示例命令
+```bash
+# 单个IP查询（默认语言为英文）
+python IPAddressQuery.py -a 8.8.8.8
+
+# 使用随机User-Agent进行查询
+python IPAddressQuery.py -a 8.8.8.8 -r
+
+# 批量文件查询
+python IPAddressQuery.py -f ips.txt
+
+# 查询并输出中文结果
+python IPAddressQuery.py -a 8.8.8.8 --lang 2
+
+# 显示版本信息
+python IPAddressQuery.py -v
+
+# 更新脚本
+python IPAddressQuery.py -u
+```
