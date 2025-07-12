@@ -26,6 +26,8 @@ chmod +x /usr/bin/IPAddressQuery
 - argparse
 - logging
 - random
+- subprocess (用于更新功能)
+- git (用于更新功能，需安装并添加到系统路径)
 
 ## 📝 配置
 编辑 `config.yaml` 文件以配置API密钥：
@@ -42,7 +44,7 @@ api_key: your_api_key_here
 6. **版本查询**：通过命令行参数 `-v` 或 `--version` 查看当前脚本的版本信息。
 7. **自动更新**：通过命令行参数 `-u` 或 `--update` 使用 Git 自动更新到最新版本。
 
-## 📊 输出示例
+## 📊 输出说明
 当查询一个IP地址时，脚本将输出以下信息：
 - IP地址
 - 国家名称
