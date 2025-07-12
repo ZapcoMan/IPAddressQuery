@@ -69,6 +69,17 @@ IPAddressQuery/
 └── ips.txt (可选)
 
 ~~~
+📎 示例输出
+~~~text
+🌍 IP 地理位置信息
+IP地址: 8.8.8.8
+国家名称: United States / Unknown
+省份/州: California / Unknown
+城市: Mountain View / Unknown
+经纬度: 37.4056, -122.0775 / 经度:Unknown, 纬度:Unknown
+组织: AS15169 Google LLC / ISP: Unknown
+是否欧盟国家: 否
+~~~
 
 ## 📊 输出说明
 
