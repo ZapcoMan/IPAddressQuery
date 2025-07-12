@@ -363,33 +363,35 @@ def handle_local_ip_query(api_key: str):
     display_local_country_info(result)
 
 
-args = get_parameter()
-config_path = "config.yaml"
+# ==================== 主函数 ====================
+if __name__ == '__main__':
+    args = get_parameter()
+    config_path = "config.yaml"
 
-# 处理--version和--update参数
-if args.version:
-    print("IPQuery version 3.0.0")
-    exit()
+    # 处理--version和--update参数
+    if args.version:
+        print("IPQuery version 3.0.0")
+        exit()
 
-if args.update:
-    update_script()
-    exit()
+    if args.update:
+        update_script()
+        exit()
 
-# 加载配置
-api_key = load_api_key_from_config(config_path)
-if not api_key:
-    logging.error("❌ 未能读取到有效的 API 密钥，请检查 config.yaml 文件。")
-    exit()
+    # 加载配置
+    api_key = load_api_key_from_config(config_path)
+    if not api_key:
+        logging.error("❌ 未能读取到有效的 API 密钥，请检查 config.yaml 文件。")
+        exit()
 
-# 解析语言参数
-lang = LANG_MAP.get(args.lang, "en")
+    # 解析语言参数
+    lang = LANG_MAP.get(args.lang, "en")
 
-# 处理IP查询
-if args.ipaddr:
-    handle_single_ip_query(api_key, args.ipaddr, lang)
-elif args.file:
-    handle_bulk_query(api_key, args.file, lang)
-else:
-    # 如果没有提供有效参数，显示帮助信息
-    parser = argparse.ArgumentParser(description='查看IP的归属地')
-    parser.print_help()
+    # 处理IP查询
+    if args.ipaddr:
+        handle_single_ip_query(api_key, args.ipaddr, lang)
+    elif args.file:
+        handle_bulk_query(api_key, args.file, lang)
+    else:
+        # 如果没有提供有效参数，显示帮助信息
+        parser = argparse.ArgumentParser(description='查看IP的归属地')
+        parser.print_help()
