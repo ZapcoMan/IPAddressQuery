@@ -39,6 +39,7 @@ LANG_MAP = {
 # 设置日志格式
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
 # ==================== API调用相关函数 ====================
 def get_ip_geolocation(ip_address: str, api_key: str, lang: str = "en") -> dict:
     """
@@ -67,6 +68,7 @@ def get_ip_geolocation(ip_address: str, api_key: str, lang: str = "en") -> dict:
         logging.error(f"请求过程中发生错误：{e}")
         return {}
 
+
 def bulk_query_ips(api_key: str, ips: list) -> list:
     """
     批量查询多个 IP 的地理信息。
@@ -80,7 +82,7 @@ def bulk_query_ips(api_key: str, ips: list) -> list:
     """
     url = f"https://api.ipgeolocation.io/v2/ipgeo-bulk?apiKey={api_key}"
     data = json.dumps({"ips": ips})
-    
+
     try:
         headers = {'Content-Type': 'application/json'}
         response = requests.post(url, data=data, headers=headers, timeout=(10, 130))
@@ -100,6 +102,7 @@ def bulk_query_ips(api_key: str, ips: list) -> list:
         logging.error(f"网络请求过程中发生错误：{e}")
         return []
 
+
 def get_local_country(api_key: str) -> dict:
     """
     获取调用者所在 IP 的国家名称（无需传入 IP）。
@@ -112,7 +115,7 @@ def get_local_country(api_key: str) -> dict:
     """
     url = f"https://api.ipgeolocation.io/v2/ipgeo?apiKey={api_key}"
     params = {"fields": "location.country_name"}
-    
+
     try:
         response = requests.get(url, params=params, timeout=10)
         response.raise_for_status()
@@ -120,6 +123,7 @@ def get_local_country(api_key: str) -> dict:
     except requests.exceptions.RequestException as e:
         logging.error(f"获取本地国家失败：{e}")
         return {}
+
 
 # ==================== 配置和工具函数 ====================
 def load_api_key_from_config(config_path: str) -> str:
@@ -140,9 +144,11 @@ def load_api_key_from_config(config_path: str) -> str:
         logging.error(f"读取配置文件时出错：{e}")
         return ''
 
+
 def get_random_user_agent() -> str:
     """获取随机User-Agent"""
     return random.choice(USER_AGENTS)
+
 
 # ==================== 显示函数 ====================
 def display_geolocation_info(data: dict):
@@ -165,6 +171,7 @@ def display_geolocation_info(data: dict):
     print(f"组织: {network.get('organization', 'Unknown')}")
     print(f"是否欧盟国家: {'是' if location.get('is_eu', False) else '否'}")
 
+
 def display_geolocation_info_cn(data: dict):
     """使用中文字段格式化展示 IP 地理位置相关信息"""
     if not data:
@@ -182,6 +189,7 @@ def display_geolocation_info_cn(data: dict):
     print(f"邮编: {location.get('zipcode', '未知')}")
     print(f"经纬度: {location.get('latitude', '未知')}, {location.get('longitude', '未知')}")
     print(f"是否欧盟国家: {'是' if location.get('is_eu', False) else '否'}")
+
 
 def display_geolocation_info_ja(data: dict):
     """使用日文字段格式化展示 IP 地理位置相关信息"""
@@ -201,6 +209,7 @@ def display_geolocation_info_ja(data: dict):
     print(f"緯度・経度: {location.get('latitude', '不明')}, {location.get('longitude', '不明')}")
     print(f"EU加盟国: {'はい' if location.get('is_eu', False) else 'いいえ'}")
 
+
 def display_geolocation_info_es(data: dict):
     """使用西班牙语字段格式化展示 IP 地理位置相关信息"""
     if not data:
@@ -218,6 +227,7 @@ def display_geolocation_info_es(data: dict):
     print(f"Código Postal: {location.get('zipcode', 'Desconocido')}")
     print(f"Latitud y Longitud: {location.get('latitude', 'Desconocido')}, {location.get('longitude', 'Desconocido')}")
     print(f"Miembro de la UE: {'Sí' if location.get('is_eu', False) else 'No'}")
+
 
 def display_geolocation_info_de(data: dict):
     """使用德语字段格式化展示 IP 地理位置相关信息"""
@@ -237,6 +247,7 @@ def display_geolocation_info_de(data: dict):
     print(f"Breiten- und Längengrad: {location.get('latitude', 'Unbekannt')}, {location.get('longitude', 'Unbekannt')}")
     print(f"EU-Mitglied: {'Ja' if location.get('is_eu', False) else 'Nein'}")
 
+
 def display_bulk_result(results: list):
     """显示批量查询结果"""
     if not results:
@@ -247,6 +258,7 @@ def display_bulk_result(results: list):
         location = item.get("location", {})
         print(f"{item['ip']}: {location.get('country_name', '未知')}")
 
+
 def display_local_country_info(data: dict):
     """显示本机 IP 所在国家名称"""
     if not data:
@@ -255,6 +267,7 @@ def display_local_country_info(data: dict):
 
     location = data.get("location", {})
     print(f"\n📍 你的 IP 所属国家是：{location.get('country_name', '未知')}")
+
 
 # ==================== 命令行参数处理 ====================
 def get_parameter():
@@ -270,7 +283,7 @@ def get_parameter():
     parser.add_argument('-u', '--update', action='store_true', help='更新脚本')
     parser.add_argument('--lang', choices=LANG_MAP.keys(), default='1',
                         help='选择输出语言: 1-English, 2-中文, 3-日本語, 4-Español, 5-Deutsch')
-    
+
     args = parser.parse_args()
 
     # 检查参数并打印帮助信息
@@ -279,6 +292,7 @@ def get_parameter():
         parser.exit()
 
     return args
+
 
 # ==================== 辅助功能 ====================
 def update_script():
@@ -290,6 +304,7 @@ def update_script():
         logging.error("更新失败: %s", e.stderr)
     except FileNotFoundError:
         logging.error("Git 命令未找到，请确保已安装 Git 并将其添加到系统路径中。")
+
 
 def read_ips_from_file(file_path: str) -> list:
     """从文件读取IP地址列表"""
@@ -303,15 +318,16 @@ def read_ips_from_file(file_path: str) -> list:
         logging.error(f"读取文件时发生错误: {e}")
         return []
 
+
 # ==================== 主要功能实现 ====================
 def handle_single_ip_query(api_key: str, ip: str, lang: str):
     """处理单个IP查询"""
     result = get_ip_geolocation(ip, api_key, lang)
-    
+
     if not result:
         print(f"❌ 无法获取 {ip} 的地理位置信息。")
         return
-    
+
     # 根据语言选择显示函数
     display_functions = {
         "en": display_geolocation_info,
@@ -320,63 +336,60 @@ def handle_single_ip_query(api_key: str, ip: str, lang: str):
         "es": display_geolocation_info_es,
         "de": display_geolocation_info_de
     }
-    
+
     display_func = display_functions.get(lang, display_geolocation_info)
     display_func(result)
+
 
 def handle_bulk_query(api_key: str, file_path: str, lang: str):
     """处理批量IP查询"""
     ips = read_ips_from_file(file_path)
-    
+
     if not ips:
         return
-    
+
     results = bulk_query_ips(api_key, ips)
-    
+
     if not results:
         print("❌ 批量查询失败，无法获取任何结果。")
         return
-    
+
     display_bulk_result(results)
+
 
 def handle_local_ip_query(api_key: str):
     """处理本机IP查询"""
     result = get_local_country(api_key)
     display_local_country_info(result)
 
-# ==================== 主函数 ====================
-def main():
-    """主程序入口"""
-    args = get_parameter()
-    config_path = "config.yaml"
-    
-    # 处理--version和--update参数
-    if args.version:
-        print("IPQuery version 3.0.0")
-        return
-        
-    if args.update:
-        update_script()
-        return
-    
-    # 加载配置
-    api_key = load_api_key_from_config(config_path)
-    if not api_key:
-        logging.error("❌ 未能读取到有效的 API 密钥，请检查 config.yaml 文件。")
-        return
-    
-    # 解析语言参数
-    lang = LANG_MAP.get(args.lang, "en")
-    
-    # 处理IP查询
-    if args.ipaddr:
-        handle_single_ip_query(api_key, args.ipaddr, lang)
-    elif args.file:
-        handle_bulk_query(api_key, args.file, lang)
-    else:
-        # 如果没有提供有效参数，显示帮助信息
-        parser = argparse.ArgumentParser(description='查看IP的归属地')
-        parser.print_help()
 
-if __name__ == '__main__':
-    main()
+args = get_parameter()
+config_path = "config.yaml"
+
+# 处理--version和--update参数
+if args.version:
+    print("IPQuery version 3.0.0")
+    exit()
+
+if args.update:
+    update_script()
+    exit()
+
+# 加载配置
+api_key = load_api_key_from_config(config_path)
+if not api_key:
+    logging.error("❌ 未能读取到有效的 API 密钥，请检查 config.yaml 文件。")
+    exit()
+
+# 解析语言参数
+lang = LANG_MAP.get(args.lang, "en")
+
+# 处理IP查询
+if args.ipaddr:
+    handle_single_ip_query(api_key, args.ipaddr, lang)
+elif args.file:
+    handle_bulk_query(api_key, args.file, lang)
+else:
+    # 如果没有提供有效参数，显示帮助信息
+    parser = argparse.ArgumentParser(description='查看IP的归属地')
+    parser.print_help()
