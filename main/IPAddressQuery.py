@@ -14,6 +14,8 @@ import logging
 import subprocess
 from typing import Dict, List
 
+
+
 # ==================== 配置部分 ====================
 # User-Agent集合（配置项）
 USER_AGENTS = [
@@ -28,7 +30,7 @@ USER_AGENTS = [
 ]
 
 # 定义脚本版本号（配置项）
-version = "3.0.0"
+version = "3.1.0"
 
 # 设置日志格式
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -142,6 +144,11 @@ def display_merged_result(data: dict, lang: str = "en"):
     # 提取经纬度信息，优先使用location中的数据，否则使用data根级数据
     ip_lat = location.get('latitude') or data.get('lat')
     ip_lon = location.get('longitude') or data.get('lon')
+
+    # 添加 Banner
+    print("=" * 65)
+    print("🌐IP地址位置查询结果".center(48))
+    print("=" * 65)
 
     print("\n🌍 IP 地理位置信息")
     print(f"IP地址: {data.get('ip', 'Unknown')}")
