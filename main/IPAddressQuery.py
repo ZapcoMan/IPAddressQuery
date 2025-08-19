@@ -131,7 +131,6 @@ def get_parameter():
 
 
 # ==================== 显示函数 ====================
-
 def display_merged_result(data: dict, lang: str = "en"):
     if not data:
         print("没有可显示的地理信息。")
@@ -139,6 +138,10 @@ def display_merged_result(data: dict, lang: str = "en"):
 
     location = data.get("location", {})
     network = data.get("network", {}).get("asn", {})
+
+    # 提取经纬度信息，优先使用location中的数据，否则使用data根级数据
+    ip_lat = location.get('latitude') or data.get('lat')
+    ip_lon = location.get('longitude') or data.get('lon')
 
     print("\n🌍 IP 地理位置信息")
     print(f"IP地址: {data.get('ip', 'Unknown')}")
@@ -148,6 +151,9 @@ def display_merged_result(data: dict, lang: str = "en"):
     print(f"经纬度: {location.get('latitude', '未知')}, {location.get('longitude', '未知')} / 经度:{data.get('lon', '未知')}, 纬度:{data.get('lat', '未知')}")
     print(f"组织: {network.get('organization', '未知')} / ISP: {data.get('isp', '未知')}")
     print(f"是否欧盟国家: {'是' if location.get('is_eu', False) else '否'}")
+    if ip_lat and ip_lon:
+        print(f"谷歌地图定位点:  https://www.google.com/maps/place/{ip_lat}+{ip_lon}")
+
 
 
 # ==================== 核心逻辑 ====================
