@@ -3,7 +3,7 @@
 # -*- 作者： codervibe/ZapcoMan -*-
 # -*- 时间: 18:46 -*-
 # -*- 获取 IP 地址定位 -*-
-# -*- 版本: 3.0.0 -*-
+# -*- 版本: 1.0.0 -*-
 
 import requests
 import yaml
@@ -12,9 +12,20 @@ import random
 import argparse
 import logging
 import subprocess
+import os
+import sys
 from typing import Dict, List
 
+# 添加项目根目录到Python路径
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
+# 从包的 __init__.py 导入版本号
+try:
+    from src import __version__ as version
+except ImportError:
+    version = "1.0.0"  # 默认版本号
 
 # ==================== 配置部分 ====================
 # User-Agent集合（配置项）
@@ -28,9 +39,6 @@ USER_AGENTS = [
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:97.0) Gecko/20100101 Firefox/97.0",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0"
 ]
-
-# 定义脚本版本号（配置项）
-version = "3.1.0"
 
 # 设置日志格式
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -162,7 +170,6 @@ def display_merged_result(data: dict, lang: str = "en"):
         print(f"谷歌地图定位点:  https://www.google.com/maps/place/{ip_lat}+{ip_lon}")
 
 
-
 # ==================== 核心逻辑 ====================
 
 def query_ip(ip: str, api_key: str, use_random_agent: bool = False, lang: str = "en") -> dict:
@@ -206,7 +213,7 @@ if __name__ == '__main__':
 
     # 处理--version和--update参数
     if args.version:
-        print(f"IPAddressQuery version {version}")
+        print(f"IPAddressQuery version: {version}")
         exit()
 
     if args.update:
