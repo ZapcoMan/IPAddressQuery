@@ -25,7 +25,7 @@ if project_root not in sys.path:
 try:
     from src import __version__ as version
 except ImportError:
-    version = "1.0.0"  # 默认版本号
+    version = "3.2.0"  # 默认版本号
 
 # ==================== 配置部分 ====================
 # User-Agent集合（配置项）
@@ -141,7 +141,7 @@ def get_parameter():
 
     if not args.ipaddr and not args.file and not args.version and not args.update:
         parser.print_help()
-        parser.exit()
+        parser.sys.exit()
 
     return args
 
@@ -221,17 +221,17 @@ if __name__ == '__main__':
     # 处理--version和--update参数
     if args.version:
         print(f"IPAddressQuery version: {version}")
-        exit()
+        sys.exit()
 
     if args.update:
         update_script()
-        exit()
+        sys.exit()
 
     # 加载配置
     api_key = load_api_key(config_path)
     if not api_key:
         logging.error("❌ 未能读取到有效的 API 密钥，请检查 config.yaml 文件。")
-        exit()
+        sys.exit()
 
     # 解析语言参数
     lang = LANG_MAP.get(args.lang, "en")
