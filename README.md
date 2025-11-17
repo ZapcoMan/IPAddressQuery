@@ -22,13 +22,20 @@
 
 ~~~bash
  git clone https://github.com/codervibe/IPAddressQuery 
- cd IPAddressQuery/main
+ cd IPAddressQuery/src
 ~~~
 ### 安装（可选）
-
+* win
 ~~~bash
- cp ./IPAddressQuery.py /usr/bin/IPAddressQuery 
- chmod +x /usr/bin/IPAddressQuery
+cd src\                                                                                                       
+pyinstaller -F IPAddressQuery.py --add-data "config.yaml;."                                                                                                  
+
+~~~
+* Linux 
+~~~bash
+pyinstaller -F IPAddressQuery.py --add-data "config.yaml:."
+cp ./IPAddressQuery.py /usr/bin/IPAddressQuery 
+chmod +x /usr/bin/IPAddressQuery
 ~~~
 ## 🔧 依赖库
 
@@ -73,10 +80,12 @@ api_key: your_api_key_here
 ## 📁 目录结构
 ~~~
 IPAddressQuery/ 
-├── main/ # 主程序目录 
+├── src/ # 主程序目录 
+├── docs/ # 文档 
 │ ├── IPAddressQuery.py # 主程序文件 
 │ ├── init.py # Python模块初始化文件 
 │ └── config.yaml # 配置文件 
+├── tests/ # 测试用例
 └── README.md # 项目说明文档
 ~~~
 
@@ -111,14 +120,46 @@ python IPAddressQuery.py -u
 ~~~
 
 📎 示例输出
-~~~base
-🌍 IP 地理位置信息 IP地址: 8.8.8.8 
-国家名称: United States / Unknown 
-省份/州: California / Unknown 
-城市: Mountain View / Unknown 
-经纬度: 37.4056, -122.0775 / 经度:Unknown, 纬度:Unknown 
-组织: AS15169 Google LLC / ISP: Unknown 
+~~~shell
+┌──(kali㉿kali)-[~]
+└─$ IPAddressQuery -a 69.154.123.12
+=================================================================
+                  🌐IP地址位置查询结果                   
+=================================================================
+
+🌍 IP 地理位置信息
+IP地址: 69.154.123.12
+国家名称: 未知 / 美国
+省份/州: 未知 / 阿肯色州
+城市: Fort Smith / 费耶特维尔
+经纬度: 35.38470, -94.42145 / 经度:-94.1523, 纬度:36.0613
+组织: 未知 / ISP: AT&T Enterprises, LLC
 是否欧盟国家: 否
+谷歌地图定位点:  https://www.google.com/maps/place/35.38470+-94.42145
+                                                                             
+                                                                             
+┌──(kali㉿kali)-[~]
+└─$ IPAddressQuery -h
+usage: IPAddressQuery [-h] [-a IPADDR] [-f FILE] [-r] [-v] [-u]
+                      [-l {1,2,3,4,5}]
+
+查看IP的归属地
+
+options:
+  -h, --help            show this help message and exit
+  -a IPADDR             输入查询IP
+  -f FILE               从文件中读取IP列表进行查询
+  -r, --random-agent    启用随机User-Agent
+  -v, --version         显示脚本的版本信息
+  -u, --update          更新脚本
+  -l, --lang {1,2,3,4,5}
+                        选择输出语言: 1-English, 2-中文, 3-日本語, 4-Español,
+                        5-Deutsch
+                                                                             
+┌──(kali㉿kali)-[~]
+└─$ IPAddressQuery -v
+IPAddressQuery version: 3.2.16
+
 ~~~
 
 ## 📝 日志与错误处理
