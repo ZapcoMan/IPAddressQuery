@@ -4,7 +4,7 @@
 
 ## 📌 版本信息
 
-当前版本: 3.0.0  
+当前版本: 3.2.0  
 作者: codervibe/ZapcoMan  
 最后更新时间: 脚本执行时可通过 -v 或 --version 查看
 
@@ -46,9 +46,10 @@
 编辑 [config.yaml](file://E:\python\Python_project\IPAddressQuery\main\config.yaml) 文件以配置API密钥：
 
 ~~~yaml
-注意：此文件包含敏感信息，请勿提交到公开仓库或共享给非授权人员
-推荐使用环境变量替代明文密钥
+# 注意：此文件包含敏感信息，请勿提交到公开仓库或共享给非授权人员
+# 推荐使用环境变量替代明文密钥
 api_key: your_api_key_here
+
 ~~~
 ## 🧪 主要功能
 
