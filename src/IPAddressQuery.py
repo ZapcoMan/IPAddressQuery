@@ -5,16 +5,16 @@
 # -*- 获取 IP 地址定位 -*-
 # -*- 版本: 1.0.0 -*-
 
+import argparse
+import json
+import logging
+import os
+import random
+import subprocess
+import sys
+
 import requests
 import yaml
-import json
-import random
-import argparse
-import logging
-import subprocess
-import os
-import sys
-from typing import Dict, List
 
 # 添加项目根目录到Python路径
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,12 +54,12 @@ LANG_MAP = {
 
 # ==================== 主要API调用函数 ====================
 
-def get_ip_geolocation(ip_address: str, api_key: str, lang: str = "en") -> dict:
+def get_ip_geolocation(ip_address: str, key: str, language: str = "en") -> dict:
     """
     使用 ipgeolocation.io 查询 IP 的地理位置信息。
     """
     url = "https://api.ipgeolocation.io/v2/ipgeo"
-    params = {"apiKey": api_key, "ip": ip_address, "lang": lang}
+    params = {"apiKey": key, "ip": ip_address, "lang": language}
     try:
         response = requests.get(url, params=params, timeout=10)
         response.raise_for_status()
@@ -67,6 +67,7 @@ def get_ip_geolocation(ip_address: str, api_key: str, lang: str = "en") -> dict:
     except requests.exceptions.RequestException as e:
         logging.error(f"ipgeolocation.io 请求失败：{e}")
         return {}
+
 
 def get_ip_from_ip_api(ip_address: str, use_random_agent=False) -> dict:
     """
@@ -178,9 +179,11 @@ def display_merged_result(data: dict, lang: str = "en"):
 # ==================== 核心逻辑 ====================
 
 def query_ip(ip: str, api_key: str, use_random_agent: bool = False, lang: str = "en") -> dict:
-    result1 = get_ip_geolocation(ip, api_key, lang)
+    result1 = get_ip_geolocation(ip, api_key, language=lang)  # 修改这里
     result2 = get_ip_from_ip_api(ip, use_random_agent)
     return merge_results(result1, result2)
+
+
 
 
 def handle_single_ip_query(api_key: str, ip: str, use_random_agent: bool, lang: str):
