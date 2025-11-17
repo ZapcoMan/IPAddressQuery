@@ -91,12 +91,17 @@ def get_ip_from_ip_api(ip_address: str, use_random_agent=False) -> dict:
 def load_api_key(config_path: str) -> str:
     """从YAML配置文件中加载API密钥"""
     try:
-        with open(config_path, 'r', encoding='utf-8') as file:
+        # 转换为绝对路径
+        abs_config_path = os.path.abspath(config_path)
+        with open(abs_config_path, 'r', encoding='utf-8') as file:
             config = yaml.safe_load(file)
             return config.get('api_key', '')
     except Exception as e:
         logging.error(f"读取配置文件时出错：{e}")
         return ''
+
+
+
 
 def get_random_user_agent() -> str:
     """获取随机User-Agent"""
@@ -206,10 +211,9 @@ def update_script():
     except FileNotFoundError:
         logging.error("Git 命令未找到，请确保已安装 Git 并将其添加到系统路径中。")
 
-
 if __name__ == '__main__':
     args = get_parameter()
-    config_path = "config.yaml"
+    config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.yaml")
 
     # 处理--version和--update参数
     if args.version:
