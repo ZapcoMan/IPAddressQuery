@@ -134,7 +134,7 @@ def get_parameter():
     parser.add_argument('-r', '--random-agent', action='store_true', help='启用随机User-Agent')
     parser.add_argument('-v', '--version', action='store_true', help='显示脚本的版本信息')
     parser.add_argument('-u', '--update', action='store_true', help='更新脚本')
-    parser.add_argument('--lang', choices=LANG_MAP.keys(), default='1',
+    parser.add_argument('-l','--lang', choices=LANG_MAP.keys(), default='1',
                         help='选择输出语言: 1-English, 2-中文, 3-日本語, 4-Español, 5-Deutsch')
 
     args = parser.parse_args()
